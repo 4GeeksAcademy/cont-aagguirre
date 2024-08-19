@@ -1,45 +1,67 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			contact: []
+
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+			agregarAgenda: async () => {
+				try{
+				const response = await fetch('https://playground.4geeks.com/contact/agendas/alejaaguirre', {
+					method: 'POST',
+					body: JSON.stringify([]),
+					headers: { 'Content-Type': 'application/json' }
 				});
-
-				//reset the global store
-				setStore({ demo: demo });
+				if (response.ok) {
+					getActions().contactosCreados(); //se cargan los contactos creados para esa agendas
+				} else {
+					console.error("error al cargar:");
+				}
+			} catch(error){
+				console.error("error al crear:", error)
 			}
+
+				
+			},
+
+
+			contactosCreados: async () => {
+				
+				const response = await fetch('https://playground.4geeks.com/contact/agendas/alejaaguirre/contacts');
+				if (response.ok) {
+					const data = await response.json();//obt los datos de la resp
+					return getStore({ contact: data })//accedo al store y a los contactos, aso con data. 
+				} else {
+					console.error("error", error)
+					getActions().agregarAgenda()//SI se borro la agenda la crea. 
+
+				}
+
+			
 		}
-	};
-};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		}
+	}
+}
+			
 
 export default getState;

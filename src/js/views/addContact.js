@@ -5,6 +5,7 @@ import { Context } from "../store/appContext";
 
 
 import "../../styles/addContact.css";
+import { Contact } from "./contact";
 
 export const AddContact = () => {
   const { store, actions } = useContext(Context);
@@ -15,25 +16,25 @@ export const AddContact = () => {
       <h1>Add a new contact</h1>
       <form>
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">Full Name</label>
+          <label htmlFor="exampleInputEmail1" className="form-label">Full Name</label>
           <input type="text" className="form-control" placeholder="Full Name" id="name" aria-describedby="fullName" />
         </div>
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">Email </label>
+          <label htmlFor="exampleInputEmail1" className="form-label">Email </label>
           <input type="email" className="form-control" placeholder="Enter email" id="exampleInputEmail1" aria-describedby="emailHelp" />
 
         </div>
         <div className="mb-3">
-          <label for="exampleInputEmail1" className="form-label">Phone</label>
+          <label htmlFor="exampleInputEmail1" className="form-label">Phone</label>
           <input type="number" className="form-control" placeholder="Enter phone" id="exampleInputEmail1" aria-describedby="emailHelp" />
 
         </div>
         <div className="mb-3">
-          <label for="exampleInputPassword1" className="form-label">Addres</label>
+          <label htmlFor="exampleInputPassword1" className="form-label">Addres</label>
           <input type="text" className="form-control" placeholder="Enter address" id="exampleInputPassword1" />
         </div>
 
-        <button type="submit" className="btn  btn-primary">Save</button>
+        <button type="submit" className="btn  btn-primary" onClick={()=>Contact}>Save</button>
       </form>
       <div className="">
         <Link to="/">
