@@ -1,0 +1,15 @@
+img{
+    height: 250px;
+    width: 250px;
+    border-radius: 50%;
+}
+
+.contenedor_card{
+    max-width: 1200px; 
+     max-height: 400px; 
+     width: 100%; 
+    height: auto;
+    margin: auto;
+    border: 1px solid gray;
+    padding: 10px;
+}
