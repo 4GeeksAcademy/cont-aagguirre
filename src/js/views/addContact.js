@@ -9,7 +9,7 @@ import { Contact } from "./contact";
 
 export const AddContact = () => { //en card le pase la key y el valor,  y aqui ds. 
   const { store, actions } = useContext(Context);
-  console.log(store.contact) //
+  
 
   const [contact, setContact]= useState([ //array con un obj vacio. como nos dice la api. 
     {
@@ -32,14 +32,10 @@ export const AddContact = () => { //en card le pase la key y el valor,  y aqui d
   }
 
   
-  const handleSubmit = (e )=>{
+  const handleSubmit = (e) => {
     e.preventDefault();
-    agregarContactos(e.target.value)
-
-
-    
-    
-  }
+    agregarContactos(contact);
+  };
  
 
   return (

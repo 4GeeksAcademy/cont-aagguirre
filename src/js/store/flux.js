@@ -1,7 +1,14 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			contact: []
+			contact: [
+				{
+					name: "name",
+					addres : "addres",
+					phone: "phone",
+					email: "email"
+				}
+			]
 
 		},
 		actions: {
@@ -66,26 +73,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 				.then((data)=>{
 					getActions().obtenerContactos()
 				})
-				.catch((Error)=>{
-					console.log("error al cargar los contactos")
+				.catch((error)=>{
+					console.error("error al cargar los contactos;:",error)
 				})
 
 			},
 
 			//en caso de tener contactos, obtenerlos. 
-			obtenerContactos : ()=>{
-				fetch("https://playground.4geeks.com/contact/agendas/alejaaguirre",{
+			obtenerContactos: () => {
+				fetch("https://playground.4geeks.com/contact/agendas/alejaaguirre", {
 					method: "GET"
-				
-				}) 
-				.then((respuesta)=>{
+				})
+				.then((respuesta) => {
 					console.log(respuesta);
-					respuesta.json()
+					return respuesta.json();
 				})
-				.then((data)=>{
-					getStore({contact: data.contacts})
+				.then((data) => {
+					getStore({ contact: data.contact });
 				})
-				
+				.catch((error) => {
+					console.error("Error al obtener los contactos:", error);
+				});
 			}
 
 
