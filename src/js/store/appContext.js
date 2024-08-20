@@ -33,7 +33,7 @@ const injectContext = PassedComponent => {
 			 **/
 
 			state.actions.crearAgenda()
-			state.actions.crearUsuario()
+			
 			state.actions.obtenerContactos()
 			
 			

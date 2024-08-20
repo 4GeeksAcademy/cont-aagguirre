@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import "../../styles/contactCard.css";
 import { Context } from "../store/appContext";
-import { Contact } from "../views/contact";
 
-export const ContactCard = (contact) => {
+
+export const ContactCard = ({ contact }) => {
     const { store, actions } = useContext(Context);
     
     return (

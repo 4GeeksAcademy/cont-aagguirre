@@ -7,7 +7,7 @@ import { Context } from "../store/appContext";
 import "../../styles/contactCard.css";
 import { ContactCard } from "../component/contactCard";
 
-export const Contact = () => {
+export const Contact = ({ contact }) => {
 	const { store, actions } = useContext(Context);
  console.log(store.contact)
 
@@ -24,7 +24,7 @@ export const Contact = () => {
 					)
 				})
 			}
-		</div>
+		</div> 
 
 
 	)}
