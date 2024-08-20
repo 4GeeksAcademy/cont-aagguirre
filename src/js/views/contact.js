@@ -9,20 +9,23 @@ import { ContactCard } from "../component/contactCard";
 
 export const Contact = () => {
 	const { store, actions } = useContext(Context);
-
+ console.log(store.contact)
 
 	return (
-		<>
-		{store.Contact.map((Contact)=>{
-			return (
-				<ContactCard  key={Contact.id} Contact={Contact}/>
-			)
-		})}
+		<div className="contenedor_contacto">
+			<h4>Mi agenda </h4>
+			<link to="/addContact">
+			<button className="boton_agregar " onClick={()=>agregarContactos()}>Añadir un nuevo contacto</button>
+			</link>
+			{
+				store.contact.map((contact)=>{
+					return (
+						<ContactCard key={contact} contact={contact}/>
+					)
+				})
+			}
+		</div>
 
 
-
-
-
-		</>
-	)
-}
+	)}
+		

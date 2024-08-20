@@ -5,9 +5,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 		},
 		actions: {
+ 
 
+			//en caso de que la agenda ya este creada en la API
 			crearAgenda : () => {
-				fetch("https://playground.4geeks.com/contact/agendas/alejaaguirre")
+				fetch('https://playground.4geeks.com/contact/agendas/alejaaguirre')
 					.then((resultado) => {
 						if (resultado.ok === false) { //evalue si esta creado  y sino, paso a la otra funcion q lo crea
 							getActions().crearUsuario()
@@ -18,7 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 					.then((data)=>{
 						console.log(data) 
-						setStore({contact:data.contact}) // accedo al store contacta, se q data tiene dentro contact (arreglo co todos los contactos. )
+						setStore({contact: data.contact}) // accedo al store contacta, se q data tiene dentro contact (arreglo co todos los contactos. )
 						//el contact de arriba se ira agregando y dejara de ser un arreglo vacio. 
 					})
 					.catch((error)=>{
@@ -26,8 +28,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					})
 				},
 
+
+			//En caso de que se verifique sino existe la agenda, me la crea y luego vuelve a la función anterior. 	
 			crearUsuario: () => {
-				fetch("https://playground.4geeks.com/contact/agendas/alejaaguirre", {
+				fetch('https://playground.4geeks.com/contact/agendas/alejaaguirre', {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify([])
@@ -44,7 +48,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 						console.log("error al cargar")
 
 					)
+			},
+
+
+			//añadir los contactos para esa agenda. 
+			agregarContactos : (contact)=>{
+				fetch("https://playground.4geeks.com/contact/agendas/alejaaguirre/contacts",{
+					method: "POST",
+					headers :{ "Content-Type": "application/json"
+				 }, body: JSON.stringify(contact)
+				})
+				.then((resultado)=>{
+					console.log(resultado);
+					return resultado.json()
+				}
+				)
+				.then((data)=>{
+					getActions().obtenerContactos()
+				})
+				.catch((Error)=>{
+					console.log("error al cargar los contactos")
+				})
+
+			},
+
+			//en caso de tener contactos, obtenerlos. 
+			obtenerContactos : ()=>{
+				fetch("https://playground.4geeks.com/contact/agendas/alejaaguirre",{
+					method: "GET"
+				
+				}) 
+				.then((respuesta)=>{
+					console.log(respuesta);
+					respuesta.json()
+				})
+				.then((data)=>{
+					getStore({contact: data.contacts})
+				})
+				
 			}
+
 
 
 

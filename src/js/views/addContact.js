@@ -7,11 +7,11 @@ import { Context } from "../store/appContext";
 import "../../styles/addContact.css";
 import { Contact } from "./contact";
 
-export const AddContact = ({Contact}) => { //en card le pase la key y el valor,  y aqui ds. 
+export const AddContact = () => { //en card le pase la key y el valor,  y aqui ds. 
   const { store, actions } = useContext(Context);
-  console.log(store.Contact) //
+  console.log(store.contact) //
 
-  const [todoContact, setTodoContact]= useState([ //array con un obj vacio. como nos dice la api. 
+  const [contact, setContact]= useState([ //array con un obj vacio. como nos dice la api. 
     {
       name: "",
       phone: "",
@@ -20,15 +20,24 @@ export const AddContact = ({Contact}) => { //en card le pase la key y el valor, 
     }
   ])
    
-  const [inputValor, setInputValor]= useState('')
+  
  
   //handleChange, encargada de capturar el evento onChange
   const handleChange = (e) => { //e sera el evento q se dispara con el input 
-    const value = e.target.value; //declaro value q en este caso es el valor del input , y e.target es el evento q disparo el input
-    setTodoContact({value:[e.taget.name]}) // una vez tendo definido el valor, actualizo el valor de set..
-  };
+  setTodoContact({ // lo utilizo para para actualizar el estado todocon..
+    ...contact, //desustruro el estado
+    [e.target.name]:e.target.value // actualiza la propiedad del input, en este caso lo llamamos name y e.target.value es el nuevo valor q el usuario introduce en el input
+  })
   
-  const handleSubmit = ()=>{
+  }
+
+  
+  const handleSubmit = (e )=>{
+    e.preventDefault();
+    agregarContactos(e.target.value)
+
+
+    
     
   }
  
@@ -36,16 +45,16 @@ export const AddContact = ({Contact}) => { //en card le pase la key y el valor, 
   return (
     <div className="container">
       <h1>Add a new contact</h1>
-      <form onSubmit={}>
+      <form onSubmit={handleSubmit}>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">Full Name</label>
           <input 
             type="text"
             className="form-control" 
             placeholder="Full Name"
-            
-            value={Contact.name}
-            onChange={(e)=>setInputValor(e.target.value)}
+            name="name"
+            value={contact.name}
+            onChange={()=> handleChange}
              />
            
         </div>
@@ -56,8 +65,8 @@ export const AddContact = ({Contact}) => { //en card le pase la key y el valor, 
             className="form-control" 
             placeholder="Enter email"  
             name="email"
-            value={Contact.email}
-            onChange={(e)=>setInputValor(e.target.value)}
+            value={contact.email}
+            onChange={()=>handleChange}
           />
 
         </div>
@@ -68,8 +77,8 @@ export const AddContact = ({Contact}) => { //en card le pase la key y el valor, 
             className="form-control" 
             placeholder="Enter phone"
             name="phone"
-            value={Contact.phone}
-            onChange={(e)=>setInputValor(e.target.value)}
+            value={contact.phone}
+            onChange={()=>handleChange}
            />
 
         </div>
@@ -80,8 +89,8 @@ export const AddContact = ({Contact}) => { //en card le pase la key y el valor, 
             className="form-control" 
             placeholder="Enter address" 
             name="addres"
-            value={Contact.addres}
-            onChange={(e)=>setInputValor(e.target.value)} 
+            value={contact.addres}
+            onChange={()=>handleChange} 
            />
         </div>
 
