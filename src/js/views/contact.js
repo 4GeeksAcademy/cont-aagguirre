@@ -5,12 +5,24 @@ import { Context } from "../store/appContext";
 
 
 import "../../styles/contactCard.css";
+import { ContactCard } from "../component/contactCard";
 
 export const Contact = () => {
 	const { store, actions } = useContext(Context);
+
+
 	return (
-		<div className="contenedor_card">
-			<Contact />
-		</div>
+		<>
+		{store.Contact.map((Contact)=>{
+			return (
+				<ContactCard  key={Contact.id} Contact={Contact}/>
+			)
+		})}
+
+
+
+
+
+		</>
 	)
 }
