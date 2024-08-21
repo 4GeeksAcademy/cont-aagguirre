@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 
 
+
 import { Context } from "../store/appContext";
 
 
@@ -9,21 +10,24 @@ import { ContactCard } from "../component/contactCard";
 
 export const Contact = () => {
 	const { store, actions } = useContext(Context);
- console.log(store.contact)
+	console.log(store)
 
 	return (
 		<div className="contenedor_contacto">
 			<h4>Mi agenda </h4>
-			
+
 			{
-				store.contact.map((contact)=>{
+				store.contacts.map((contact) => {
 					return (
-						<ContactCard key={contact} contact={contact.id}/>
+						<ContactCard key={contact.id} contact={contact} />
 					)
 				})
 			}
-		</div> 
+
+			
+		</div>
 
 
-	)}
-		
+	)
+}
+

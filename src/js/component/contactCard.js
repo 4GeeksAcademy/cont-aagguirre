@@ -1,10 +1,9 @@
-import React, { useContext } from "react";
+import React from "react";
 import "../../styles/contactCard.css";
-import { Context } from "../store/appContext";
 
 
 export const ContactCard = ({ contact }) => {
-    const { store, actions } = useContext(Context);
+    console.log(contact);
     
     return (
         <div className="contenedor_card row ">

@@ -1,35 +1,35 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			contact: [
+			contacts: [
 				{
 					name: "name",
 					addres : "addres",
 					phone: "phone",
 					email: "email"
 				}
-			]
-
+			],
+			 
+			
+			
+ 
 		},
 		actions: {
  
 
 			//en caso de que la agenda ya este creada en la API
-			crearAgenda : () => {
+			verificarAgenda : () => {
 				fetch('https://playground.4geeks.com/contact/agendas/alejaaguirre')
 					.then((resultado) => {
 						if (resultado.ok === false) { //evalue si esta creado  y sino, paso a la otra funcion q lo crea
-							getActions().crearUsuario()
+							getActions().crearAgenda()
 							
 						}else{
-							return resultado.json(); //pide el formato json y llega la data.
+							getActions().obtenerContactos()
+
 						}
 					})
-					.then((data)=>{
-						console.log(data) 
-						setStore({contact: data.contact}) // accedo al store contacta, se q data tiene dentro contact (arreglo co todos los contactos. )
-						//el contact de arriba se ira agregando y dejara de ser un arreglo vacio. 
-					})
+					
 					.catch((error)=>{
 						console.log("error")
 					})
@@ -37,20 +37,17 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			//En caso de que se verifique sino existe la agenda, me la crea y luego vuelve a la función anterior. 	
-			crearUsuario: () => {
+			crearAgenda: () => {
 				fetch('https://playground.4geeks.com/contact/agendas/alejaaguirre', {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify([])
 				})
 					.then((resultado) => { //una vez creado, vuelvo a llamar a la funcion anterior
-						console.log(resultado)
-						return resultado.json();
+						//console.log(resultado)
+						getActions().obtenerContactos()
+
 					})
-					.then((data) => { //una vez creado el usuario con la petición  post, vuelvo a mi función anterior. 
-						getActions().crearAgenda()
-						console.log(data)
-					})
+					
 					.catch(error =>
 						console.log("error al cargar")
 
@@ -59,19 +56,20 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			//añadir los contactos para esa agenda. 
-			agregarContactos : (contact)=>{
+			agregarContactos : (todoContact)=>{
 				fetch("https://playground.4geeks.com/contact/agendas/alejaaguirre/contacts",{
 					method: "POST",
 					headers :{ "Content-Type": "application/json"
-				 }, body: JSON.stringify(contact)
+				 }, body: JSON.stringify(todoContact )
 				})
 				.then((resultado)=>{
-					console.log(resultado);
+				//	console.log(resultado);
 					return resultado.json()
 				}
 				)
 				.then((data)=>{
 					getActions().obtenerContactos()
+					//console.log(data)
 				})
 				.catch((error)=>{
 					console.error("error al cargar los contactos;:",error)
@@ -85,11 +83,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 					method: "GET"
 				})
 				.then((respuesta) => {
-					console.log(respuesta);
+					//console.log(respuesta);
 					return respuesta.json();
 				})
 				.then((data) => {
-					getStore({ contact: data.contact });
+					//console.log(data);
+					setStore({ contacts: data.contacts });
+					//console.log(getStore());
 				})
 				.catch((error) => {
 					console.error("Error al obtener los contactos:", error);
