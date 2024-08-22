@@ -2,12 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			contacts: [
-				{
-					name: "name",
-					phone: "phone",
-					email: "email",
-					address: "addres"
-				}
+				
 			],
 
 
@@ -97,22 +92,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 					});
 			},
 
-			eliminarContactos: ({ contacts_id }) => {
-				fetch(`https://playground.4geeks.com/contact/agendas/alejaaguirre/${contacts_id}`, {
+			eliminarContactos: (id) => {
+				fetch(`https://playground.4geeks.com/contact/agendas/alejaaguirre/contacts/${id}`, {
 					method: "DELETE"
 				})
-				.then((respuesta) => {
-					return respuesta.json()
-				})
-				.then((data)=>{
-					setStore(data.contacts)
+				
+				.then(()=>{
+					getActions().obtenerContactos()
 				})
 				.catch((error) => {
 					console.error("Error al obtener los contactos:", error);
 				});
-			}
+			},
 
-
+          actualizarContacto : (id, actualizarContacto)=>{
+			fetch(`https://playground.4geeks.com/contact/agendas/alejaaguirre/contacts/${id}`,{
+				method: "PUT",
+				body: JSON.stringify(actualizarContacto),
+				headers: { "Content-Type": "application/json"}, 
+			})
+			.then(()=>{
+				getActions().obtenerContactos()
+			})
+			.catch((error)=>{
+				console.log("error  al cargar")
+			})
+		  }
 
 
 

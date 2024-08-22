@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../../styles/contactCard.css";
+import { Context } from "../store/appContext";
+import { useNavigate } from "react-router";
 
 
-export const ContactCard = ({ contact, contact_id}) => {
+export const ContactCard = ({ contact, id}) => {
+    const { store, actions } = useContext(Context);
+    const navegador = useNavigate();
     console.log(contact);
     
     return (
@@ -20,8 +24,8 @@ export const ContactCard = ({ contact, contact_id}) => {
                 <i className="fa fa-regular fa-envelope">{contact.address}</i>
             </div>
             <div className="col-1 contactos_opciones">
-                <i className=" fa fa-solid fa-pen-nib" onClick={(e)=> eliminarContactos(e.target, contact_id)}></i>
-                <i className=" fa fa-solid fa-trash"></i>
+                <i className=" fa fa-solid fa-pen-nib"  onClick={()=>navegador()}></i>
+                <i className=" fa fa-solid fa-trash" onClick={()=> actions.eliminarContactos(id)}></i>
 
             </div>
 
