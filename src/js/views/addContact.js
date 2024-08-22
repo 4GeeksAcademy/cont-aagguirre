@@ -15,7 +15,7 @@ export const AddContact = () => { //en card le pase la key y el valor,  y aqui d
     name: "",
     phone: "",
     email: "",
-    addres: ""
+    address: ""
 
   })
 
@@ -82,8 +82,8 @@ export const AddContact = () => { //en card le pase la key y el valor,  y aqui d
             type="text"
             className="form-control"
             placeholder="Enter address"
-            name="addres"
-            value={todoContact.addres}
+            name="address"
+            value={todoContact.address}
             onChange={ handleChange}
           />
         </div>

@@ -1,33 +1,23 @@
 import React, { useState, useEffect, useContext } from "react";
-
-
-
 import { Context } from "../store/appContext";
-
-
 import "../../styles/contactCard.css";
 import { ContactCard } from "../component/contactCard";
 
 export const Contact = () => {
-	const { store, actions } = useContext(Context);
-	console.log(store)
+    const { store, actions } = useContext(Context);
 
-	return (
-		<div className="contenedor_contacto">
-			<h4>Mi agenda </h4>
+    //verificamos el store.contact
+    if (!store.contacts || !Array.isArray(store.contacts)) {
+        return <div>No contacts available</div>;
+    }
 
-			{
-				store.contacts.map((contact) => {
-					return (
-						<ContactCard key={contact.id} contact={contact} />
-					)
-				})
-			}
-
-			
-		</div>
-
-
-	)
-}
+    return (
+        <div className="contenedor_contacto">
+            <h4 className="titulo_contacto">Mi agenda</h4>
+            {store.contacts.map((contact) => (
+                <ContactCard key={contact.id} contact={contact} />
+            ))}
+        </div>
+    );
+};
 

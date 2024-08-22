@@ -4,36 +4,36 @@ const getState = ({ getStore, getActions, setStore }) => {
 			contacts: [
 				{
 					name: "name",
-					addres : "addres",
 					phone: "phone",
-					email: "email"
+					email: "email",
+					address: "addres"
 				}
 			],
-			 
-			
-			
- 
+
+
+
+
 		},
 		actions: {
- 
+
 
 			//en caso de que la agenda ya este creada en la API
-			verificarAgenda : () => {
+			verificarAgenda: () => {
 				fetch('https://playground.4geeks.com/contact/agendas/alejaaguirre')
 					.then((resultado) => {
 						if (resultado.ok === false) { //evalue si esta creado  y sino, paso a la otra funcion q lo crea
 							getActions().crearAgenda()
-							
-						}else{
+
+						} else {
 							getActions().obtenerContactos()
 
 						}
 					})
-					
-					.catch((error)=>{
+
+					.catch((error) => {
 						console.log("error")
 					})
-				},
+			},
 
 
 			//En caso de que se verifique sino existe la agenda, me la crea y luego vuelve a la función anterior. 	
@@ -47,7 +47,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 						getActions().obtenerContactos()
 
 					})
-					
+
 					.catch(error =>
 						console.log("error al cargar")
 
@@ -56,24 +56,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 
 			//añadir los contactos para esa agenda. 
-			agregarContactos : (todoContact)=>{
-				fetch("https://playground.4geeks.com/contact/agendas/alejaaguirre/contacts",{
+			agregarContactos: (todoContact) => {
+				fetch("https://playground.4geeks.com/contact/agendas/alejaaguirre/contacts", {
 					method: "POST",
-					headers :{ "Content-Type": "application/json"
-				 }, body: JSON.stringify(todoContact )
+					headers: {
+						"Content-Type": "application/json"
+					}, body: JSON.stringify(todoContact)
 				})
-				.then((resultado)=>{
-				//	console.log(resultado);
-					return resultado.json()
-				}
-				)
-				.then((data)=>{
-					getActions().obtenerContactos()
-					//console.log(data)
-				})
-				.catch((error)=>{
-					console.error("error al cargar los contactos;:",error)
-				})
+					.then((resultado) => {
+						//	console.log(resultado);
+						return resultado.json()
+					}
+					)
+					.then((data) => {
+						getActions().obtenerContactos()
+						//console.log(data)
+					})
+					.catch((error) => {
+						console.error("error al cargar los contactos;:", error)
+					})
 
 			},
 
@@ -82,19 +83,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 				fetch("https://playground.4geeks.com/contact/agendas/alejaaguirre", {
 					method: "GET"
 				})
-				.then((respuesta) => {
-					//console.log(respuesta);
-					return respuesta.json();
+					.then((respuesta) => {
+						//console.log(respuesta);
+						return respuesta.json();
+					})
+					.then((data) => {
+						//console.log(data);
+						setStore({ contacts: data.contacts });
+						//console.log(getStore());
+					})
+					.catch((error) => {
+						console.error("Error al obtener los contactos:", error);
+					});
+			},
+
+			eliminarContactos: ({ contacts_id }) => {
+				fetch(`https://playground.4geeks.com/contact/agendas/alejaaguirre/${contacts_id}`, {
+					method: "DELETE"
 				})
-				.then((data) => {
-					//console.log(data);
-					setStore({ contacts: data.contacts });
-					//console.log(getStore());
+				.then((respuesta) => {
+					return respuesta.json()
+				})
+				.then((data)=>{
+					setStore(data.contacts)
 				})
 				.catch((error) => {
 					console.error("Error al obtener los contactos:", error);
 				});
 			}
+
 
 
 

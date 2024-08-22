@@ -2,7 +2,7 @@ import React from "react";
 import "../../styles/contactCard.css";
 
 
-export const ContactCard = ({ contact }) => {
+export const ContactCard = ({ contact, contact_id}) => {
     console.log(contact);
     
     return (
@@ -13,14 +13,14 @@ export const ContactCard = ({ contact }) => {
             <div className="col-4 datos_contactos">
                 <h4> {contact.name}</h4>
                 <br/>
-                <i className=" fa fa-solid fa-location-dot"> {contact.address}</i>
+                <i className=" fa fa-regular fa-envelope"> {contact.email}</i>
                 <br/>
                 <i className=" fa fa-solid fa-phone">  {contact.phone}</i>
                 <br/>
-                <i className=" fa fa-regular fa-envelope">{contact.email} </i>
+                <i className="fa fa-regular fa-envelope">{contact.address}</i>
             </div>
             <div className="col-1 contactos_opciones">
-                <i className=" fa fa-solid fa-pen-nib"></i>
+                <i className=" fa fa-solid fa-pen-nib" onClick={(e)=> eliminarContactos(e.target, contact_id)}></i>
                 <i className=" fa fa-solid fa-trash"></i>
 
             </div>
