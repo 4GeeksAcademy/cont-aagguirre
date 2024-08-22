@@ -7,7 +7,7 @@ import { useNavigate } from "react-router";
 export const ContactCard = ({ contact, id}) => {
     const { store, actions } = useContext(Context);
     const navegador = useNavigate();
-    console.log(contact);
+  
     
     return (
         <div className="contenedor_card row ">
@@ -24,7 +24,11 @@ export const ContactCard = ({ contact, id}) => {
                 <i className="fa fa-regular fa-envelope">{contact.address}</i>
             </div>
             <div className="col-1 contactos_opciones">
-                <i className=" fa fa-solid fa-pen-nib"  onClick={()=>navegador()}></i>
+                <i className=" fa fa-solid fa-pen-nib"  onClick={()=> {
+                     actions.saveContact(contact);
+                     navegador("/editContact");
+                }
+                    }></i>
                 <i className=" fa fa-solid fa-trash" onClick={()=> actions.eliminarContactos(id)}></i>
 
             </div>

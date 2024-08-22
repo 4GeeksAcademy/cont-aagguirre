@@ -33,6 +33,13 @@ export const AddContact = () => { //en card le pase la key y el valor,  y aqui d
     e.preventDefault();
     console.log(todoContact)
     actions.agregarContactos(todoContact);
+    setTodoContact({
+      name: "",
+      phone: "",
+      email: "",
+      address: ""
+    });
+
   };
 
 

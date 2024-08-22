@@ -5,7 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				
 			],
 
-
+			contact:{},
 
 
 		},
@@ -105,21 +105,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 			},
 
-          actualizarContacto : (id, actualizarContacto)=>{
+          actualizarContacto : (name, phone, email, address, id)=>{
 			fetch(`https://playground.4geeks.com/contact/agendas/alejaaguirre/contacts/${id}`,{
 				method: "PUT",
-				body: JSON.stringify(actualizarContacto),
+				body: JSON.stringify(
+					{
+						name: name,
+						phone: phone,
+						email: email,
+						address: address
+					}
+				),
 				headers: { "Content-Type": "application/json"}, 
 			})
+			.then((respuesta)=>{
+				return respuesta.json()
+			}
+			 )
 			.then(()=>{
 				getActions().obtenerContactos()
 			})
 			.catch((error)=>{
 				console.log("error  al cargar")
 			})
-		  }
+		  },
 
-
+        saveContact : (contact)=>{
+			setStore({contact: contact})
+		},
 
 
 

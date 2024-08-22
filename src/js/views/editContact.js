@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useSyncExternalStore } from "react";
 import { Link, useParams } from "react-router-dom";
 
 import { Context } from "../store/appContext";
@@ -7,8 +7,35 @@ import { Context } from "../store/appContext";
 import "../../styles/addContact.css";
 import { Contact } from "./contact";
 
-export const EditContact = () => { //en card le pase la key y el valor,  y aqui ds. 
+export const EditContact = (contact) => { //en card le pase la key y el valor,  y aqui ds. 
   const { store, actions } = useContext(Context);
+
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("")
+
+
+
+  useEffect(() => {
+    if (store.contact && store.contact.id) {
+      setName(store.contact.name)
+    };
+
+    if (store.contact && store.contact.id) {
+      setPhone(store.contact.phone)
+    };
+
+    if (store.contact && store.contact.id) {
+      setAddress(store.contact.address)
+    };
+
+    if (store.contact && store.contact.id) {
+      setEmail(store.contact.email)
+    }
+
+
+  }, [])
 
   const parametros = useParams();
   const [todoContact, setTodoContact] = useState({
@@ -25,17 +52,19 @@ export const EditContact = () => { //en card le pase la key y el valor,  y aqui 
   const handleChange = (e) => { //e sera el evento q se dispara con el input 
     setTodoContact({ // lo utilizo para para actualizar el estado todocon..
       ...todoContact, //desustruro el estado
-      [e.target.id]: e.target.value // actualiza la propiedad del input, en este caso lo llamamos name y e.target.value es el nuevo valor q el usuario introduce en el input
+      [e.target.name]: e.target.value // actualiza la propiedad del input, en este caso lo llamamos name y e.target.value es el nuevo valor q el usuario introduce en el input
     })
 
   }
 
 
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-   
+
     actions.agregarContactos(todoContact);
-   setTodoContact("")
+    setTodoContact("")
   };
 
 
@@ -48,10 +77,10 @@ export const EditContact = () => { //en card le pase la key y el valor,  y aqui 
           <input
             type="text"
             className="form-control"
-            placeholder="Full Name"
+            placeholder="full name"
             name="name"
-            value={todoContact.name}
-            onChange={ handleChange}
+            value={name}
+            onChange={handleChange}
             id="inputVaciar"
           />
 
@@ -63,8 +92,8 @@ export const EditContact = () => { //en card le pase la key y el valor,  y aqui 
             className="form-control"
             placeholder="Enter email"
             name="email"
-            value={todoContact.email}
-            onChange={ handleChange}
+            value={email}
+            onChange={handleChange}
           />
 
         </div>
@@ -75,8 +104,8 @@ export const EditContact = () => { //en card le pase la key y el valor,  y aqui 
             className="form-control"
             placeholder="Enter phone"
             name="phone"
-            value={todoContact.phone}
-            onChange={ handleChange}
+            value={phone}
+            onChange={handleChange}
           />
 
         </div>
@@ -87,8 +116,8 @@ export const EditContact = () => { //en card le pase la key y el valor,  y aqui 
             className="form-control"
             placeholder="Enter address"
             name="address"
-            value={todoContact.address}
-            onChange={ handleChange}
+            value={address}
+            onChange={handleChange}
           />
         </div>
 
