@@ -1,15 +1,12 @@
 import React, { useState, useEffect, useContext, useSyncExternalStore } from "react";
 import { Link, useParams } from "react-router-dom";
-
+import { useNavigate } from "react-router";
 import { Context } from "../store/appContext";
-
-
 import "../../styles/addContact.css";
-import { Contact } from "./contact";
 
 export const EditContact = (contact) => { //en card le pase la key y el valor,  y aqui ds. 
+  const navegador = useNavigate();
   const { store, actions } = useContext(Context);
-
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
@@ -49,22 +46,48 @@ export const EditContact = (contact) => { //en card le pase la key y el valor,  
   //const [input, setInput] = useState("")
 
   //handleChange, encargada de capturar el evento onChange
-  const handleChange = (e) => { //e sera el evento q se dispara con el input 
-    setTodoContact({ // lo utilizo para para actualizar el estado todocon..
-      ...todoContact, //desustruro el estado
-      [e.target.name]: e.target.value // actualiza la propiedad del input, en este caso lo llamamos name y e.target.value es el nuevo valor q el usuario introduce en el input
-    })
+  const handleChangeName = (e) => { //e sera el evento q se dispara con el input 
+
+    setName(e.target.value)
 
   }
 
 
+  //handleChange, encargada de capturar el evento onChange
+  const handleChangeEmail = (e) => { //e sera el evento q se dispara con el input 
 
+    setEmail(e.target.value)
+
+  }
+
+
+  //handleChange, encargada de capturar el evento onChange
+  const handleChangePhone = (e) => { //e sera el evento q se dispara con el input 
+
+    setPhone(e.target.value)
+
+  }
+
+
+  //handleChange, encargada de capturar el evento onChange
+  const handleChangeAddress = (e) => { //e sera el evento q se dispara con el input 
+
+    setAddress(e.target.value)
+
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    actions.agregarContactos(todoContact);
-    setTodoContact("")
+    actions.actualizarContacto(name, phone, email, address, store.contact.id);
+    setTodoContact({
+      name: "",
+      phone: "",
+      email: "",
+      address: ""
+    });
+    navegador("/");
+
   };
 
 
@@ -80,7 +103,7 @@ export const EditContact = (contact) => { //en card le pase la key y el valor,  
             placeholder="full name"
             name="name"
             value={name}
-            onChange={handleChange}
+            onChange={handleChangeName}
             id="inputVaciar"
           />
 
@@ -93,7 +116,7 @@ export const EditContact = (contact) => { //en card le pase la key y el valor,  
             placeholder="Enter email"
             name="email"
             value={email}
-            onChange={handleChange}
+            onChange={handleChangeEmail}
           />
 
         </div>
@@ -105,7 +128,7 @@ export const EditContact = (contact) => { //en card le pase la key y el valor,  
             placeholder="Enter phone"
             name="phone"
             value={phone}
-            onChange={handleChange}
+            onChange={handleChangePhone}
           />
 
         </div>
@@ -117,7 +140,7 @@ export const EditContact = (contact) => { //en card le pase la key y el valor,  
             placeholder="Enter address"
             name="address"
             value={address}
-            onChange={handleChange}
+            onChange={handleChangeAddress}
           />
         </div>
 

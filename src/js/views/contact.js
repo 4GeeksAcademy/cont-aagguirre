@@ -13,7 +13,8 @@ export const Contact = () => {
 
     return (
         <div className="contenedor_contacto">
-            <h4 className="titulo_contacto">Mi agenda</h4>
+            <h2 className="titulo_contacto">Mi agenda</h2>
+            
             {store.contacts.map((contact) => (
                 <ContactCard key={contact.id} contact={contact} id={contact.id}/>
             ))}

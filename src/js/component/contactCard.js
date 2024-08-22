@@ -7,6 +7,12 @@ import { useNavigate } from "react-router";
 export const ContactCard = ({ contact, id}) => {
     const { store, actions } = useContext(Context);
     const navegador = useNavigate();
+
+    const confirmDelete = ()=>{
+        if(window.confirm('¿Estás seguro de que quieres eliminar este contacto?')){
+            actions.eliminarContactos(id);
+        }
+    }
   
     
     return (
@@ -21,7 +27,7 @@ export const ContactCard = ({ contact, id}) => {
                 <br/>
                 <i className=" fa fa-solid fa-phone">  {contact.phone}</i>
                 <br/>
-                <i className="fa fa-regular fa-envelope">{contact.address}</i>
+                <i className="fa fa-solid fa-map-pin">{contact.address}</i>
             </div>
             <div className="col-1 contactos_opciones">
                 <i className=" fa fa-solid fa-pen-nib"  onClick={()=> {
@@ -29,7 +35,7 @@ export const ContactCard = ({ contact, id}) => {
                      navegador("/editContact");
                 }
                     }></i>
-                <i className=" fa fa-solid fa-trash" onClick={()=> actions.eliminarContactos(id)}></i>
+                <i className=" fa fa-solid fa-trash" onClick={()=> confirmDelete()}></i>
 
             </div>
 
